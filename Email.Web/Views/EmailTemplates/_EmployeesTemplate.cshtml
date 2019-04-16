@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Email.Web.Models.Employee>
+@{ 
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div class="active">
+            Name : @item.FirstName - @item.LastName
+        </div>
+    }
+}

@@ -1,18 +1,31 @@
-﻿using System;
+﻿using Email.Web.Helpers;
+using Email.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Email.Web.Models;
 
 namespace Email.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly RazorViewRender _razorViewRender;
+
+        public HomeController(RazorViewRender razorViewRender)
+        {
+            this._razorViewRender = razorViewRender ?? throw new ArgumentNullException(nameof(razorViewRender));
+        }
         public IActionResult Index()
         {
-            return View();
+            List<Employee> employees = new List<Employee>() {
+                new Employee("Swagat","Swain"),
+                new Employee("Rohit","Khan"),
+                new Employee("Roy","Sethy"),
+                new Employee("Salman","Jena")
+            };
+
+            var viewWithViewModel = _razorViewRender.Render("~/Views/EmailTemplates/_EmployeesTemplate.cshtml", employees);
+            return Ok(viewWithViewModel);
         }
 
         public IActionResult About()
